@@ -2,7 +2,7 @@ FROM php:8.2-fpm
 
 # Устанавливаем утилиты для работы с PostgreSQL и Xdebug для отладки
 RUN apt-get update \
-    && apt-get install -y libpq-dev libzip-dev zip git\
+    && apt-get install -y libpq-dev libzip-dev zip git postgresql-client\
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
