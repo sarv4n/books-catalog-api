@@ -13,4 +13,4 @@ Quality-Profiency Assessment
  php bin/console doctrine-migration-migrate
 
 
-Для теста используйте form-data формат для тела запроса при POST запросах.
+Для тела запроса при POST запросах используйте form-data формат.
