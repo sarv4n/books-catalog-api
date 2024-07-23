@@ -10,7 +10,7 @@ class CreateRequest implements CreateRequestInterface
 {
     #[Assert\NotBlank]
     #[Assert\Type('string')]
-    #[Assert\Length(min: 3, max: 255)]
+    #[Assert\Length(min: 1, max: 255)]
     private mixed $firstName = null;
 
     #[Assert\NotBlank]
@@ -19,6 +19,7 @@ class CreateRequest implements CreateRequestInterface
     private mixed $lastName = null;
 
     #[Assert\Type('string')]
+    #[Assert\Length(min: 1, max: 255)]
     private mixed $patronymic = null;
 
     #[Assert\Type('array')]

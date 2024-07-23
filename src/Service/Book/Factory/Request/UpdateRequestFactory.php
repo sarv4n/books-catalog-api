@@ -17,7 +17,8 @@ class UpdateRequestFactory implements RequestFactoryInterface
         $dto->setDescription($args['description'] ?? null);
         $dto->setImageFile($args['imageFile'] ?? null);
         $dto->setPublicationDate($args['publicationDate'] ?? null);
-        $dto->setAuthors($args['authors'] ?? null);
+        $dto->setAuthorsToAdd($args['authorsToAdd'] ?? null);
+        $dto->setAuthorsToRemove($args['authorsToRemove'] ?? null);
 
         return $dto;
     }

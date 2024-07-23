@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Exception\Validator\ValidationException;
 use App\Service\Author\CommandService;
 use App\Service\Author\Factory\Command\CreateCommandFactory;
 use App\Service\Author\Factory\Request\CreateRequestFactory;
@@ -28,8 +29,13 @@ class AuthorController extends RestController
         ValidatorService $validator,
         CommandService $commandService,
     ) {
-        $dto = $createRequestFactory->create($request->toArray());
-        $validator->validateWithThrowsException($dto);
+        $dto = $createRequestFactory->create($request->request->all());
+
+        try {
+            $validator->validateWithThrowsException($dto);
+        } catch (ValidationException $exception) {
+            return $this->makeJsonErrorResponse($exception->getMessage());
+        }
 
         $commandService->create($commandFactory->create($dto));
         return $this->makeJsonResponse(['ok']);

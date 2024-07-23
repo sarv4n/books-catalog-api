@@ -28,7 +28,8 @@ class EntityArrayConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'array');
         }
 
-        foreach ($value as $entityId) {
+        foreach ($value as &$entityId) {
+            $entityId = (int) $entityId;
             if (!is_int($entityId)) {
                 throw new UnexpectedTypeException($entityId, 'int');
             }
@@ -44,7 +45,7 @@ class EntityArrayConstraintValidator extends ConstraintValidator
 
         $records = $repository->findBy(['id' => $value]);
 
-        $existingIds = array_map(function($record) {
+        $existingIds = array_map(function ($record) {
             return $record->getId();
         }, $records);
 
@@ -52,9 +53,10 @@ class EntityArrayConstraintValidator extends ConstraintValidator
 
         if (!empty($nonExistingIds)) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ entity }}', $constraint->entity)
-                ->setParameter('{{ entityIds }}', join(', ', $nonExistingIds))
-                ->addViolation();
+                          ->setParameter('{{ entity }}', $constraint->entity)
+                          ->setParameter('{{ entityIds }}', join(', ', $nonExistingIds))
+                          ->addViolation()
+            ;
         }
     }
 }

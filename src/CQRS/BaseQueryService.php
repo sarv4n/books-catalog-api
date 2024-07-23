@@ -36,10 +36,14 @@ class BaseQueryService
 
     public function getItem(int $id, bool $normalized = false): EntityInterface | array | null
     {
-        if (!$normalized) {
-            return $this->repository->findOneBy(['id' => $id]);
+        if ($item = $this->repository->findOneBy(['id' => $id])) {
+            if (!$normalized) {
+                return $item;
+            }
+
+            return $this->normalizer->normalize($item);
         }
 
-        return $this->normalizer->normalize($this->repository->findOneBy(['id' => $id]));
+        return null;
     }
 }

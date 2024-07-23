@@ -27,7 +27,11 @@ interface UpdateCommandInterface extends CommandInterface
 
     public function setPublicationDate(?\DateTimeImmutable $publicationDate): void;
 
-    public function getAuthors(): ?array;
+    public function getAuthorsToAdd(): ?array;
 
-    public function setAuthors(?array $authors): void;
+    public function setAuthorsToAdd(?array $authorsToAdd): void;
+
+    public function getAuthorsToRemove(): ?array;
+
+    public function setAuthorsToRemove(?array $authorsToRemove): void;
 }

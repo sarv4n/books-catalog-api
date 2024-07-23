@@ -50,15 +50,16 @@ class CommandService
             throw new EntityNotFoundException();
         }
 
-        $book->setTitle($command->getTitle());
-        $book->setDescription($command->getDescription());
+        $book->setTitle($command->getTitle() ?? $book->getTitle());
+        $book->setDescription($command->getDescription() ?? $book->getDescription());
+        $book->setPublicationDate($command->getPublicationDate() ?? $book->getPublicationDate());
 
-        if ($command->getPublicationDate() !== null) {
-            $book->setPublicationDate($command->getPublicationDate());
+        foreach ($command->getAuthorsToAdd() as $authorId) {
+            $book->addAuthor($this->authorQueryService->getItem($authorId));
         }
 
-        foreach ($command->getAuthors() as $authorId) {
-            $book->addAuthor($this->authorQueryService->getItem($authorId));
+        foreach ($command->getAuthorsToRemove() as $authorId) {
+            $book->removeAuthor($this->authorQueryService->getItem($authorId));
         }
 
         $this->entityManager->persist($book);

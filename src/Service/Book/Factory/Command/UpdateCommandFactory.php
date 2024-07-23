@@ -14,23 +14,17 @@ class UpdateCommandFactory implements CommandFactoryInterface
         $command = new UpdateCommand();
 
         $command->setId($request->getId());
-
-        if ($request->getTitle() !== null) {
-            $command->setTitle($request->getTitle());
-        }
-
+        $command->setTitle($request->getTitle());
         $command->setDescription($request->getDescription());
-
-        if ($request->getImageFile() !== null) {
-            $command->setImageFile($request->getImageFile());
-        }
+        $command->setImageFile($request->getImageFile());
 
         $command->setPublicationDate(
             $request->getPublicationDate() ?
                 new \DateTimeImmutable($request->getPublicationDate()) : null,
         );
 
-        $command->setAuthors($request->getAuthors() ?? []);
+        $command->setAuthorsToAdd($request->getAuthorsToAdd() ?? []);
+        $command->setAuthorsToRemove($request->getAuthorsToRemove() ?? []);
 
         return $command;
     }

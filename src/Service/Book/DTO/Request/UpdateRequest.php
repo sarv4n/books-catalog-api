@@ -20,7 +20,7 @@ class UpdateRequest implements UpdateRequestInterface
     private mixed $title = null;
 
     #[Assert\Type('string')]
-    #[Assert\Length(max: 255)]
+    #[Assert\Length(min: 1, max: 255)]
     private mixed $description = null;
 
     #[Assert\Type(UploadedFile::class)]
@@ -36,7 +36,11 @@ class UpdateRequest implements UpdateRequestInterface
 
     #[Assert\Type('array')]
     #[EntityAssert\EntityArrayConstraint(entity: Author::class)]
-    private mixed $authors = null;
+    private mixed $authorsToAdd = null;
+
+    #[Assert\Type('array')]
+    #[EntityAssert\EntityArrayConstraint(entity: Author::class)]
+    private mixed $authorsToRemove = null;
 
     public function getId(): mixed
     {
@@ -78,16 +82,6 @@ class UpdateRequest implements UpdateRequestInterface
         $this->imageFile = $imageFile;
     }
 
-    public function getImagePath(): mixed
-    {
-        return $this->imagePath;
-    }
-
-    public function setImagePath(mixed $imagePath): void
-    {
-        $this->imagePath = $imagePath;
-    }
-
     public function getPublicationDate(): mixed
     {
         return $this->publicationDate;
@@ -98,13 +92,23 @@ class UpdateRequest implements UpdateRequestInterface
         $this->publicationDate = $publicationDate;
     }
 
-    public function getAuthors(): mixed
+    public function getAuthorsToAdd(): mixed
     {
-        return $this->authors;
+        return $this->authorsToAdd;
     }
 
-    public function setAuthors(mixed $authors): void
+    public function setAuthorsToAdd(mixed $authorsToAdd): void
     {
-        $this->authors = $authors;
+        $this->authorsToAdd = $authorsToAdd;
+    }
+
+    public function getAuthorsToRemove(): mixed
+    {
+        return $this->authorsToRemove;
+    }
+
+    public function setAuthorsToRemove(mixed $authorsToRemove): void
+    {
+        $this->authorsToRemove = $authorsToRemove;
     }
 }

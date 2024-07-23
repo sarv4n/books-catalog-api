@@ -17,7 +17,7 @@ class CreateRequest implements CreateRequestInterface
     private mixed $title = null;
 
     #[Assert\Type('string')]
-    #[Assert\Length(max: 255)]
+    #[Assert\Length(min: 1, max: 255)]
     private mixed $description = null;
 
     #[Assert\NotBlank]
@@ -65,16 +65,6 @@ class CreateRequest implements CreateRequestInterface
     public function setImageFile(mixed $imageFile): void
     {
         $this->imageFile = $imageFile;
-    }
-
-    public function getImagePath(): mixed
-    {
-        return $this->imagePath;
-    }
-
-    public function setImagePath(mixed $imagePath): void
-    {
-        $this->imagePath = $imagePath;
     }
 
     public function getPublicationDate(): mixed

@@ -21,15 +21,24 @@ class QueryService extends BaseQueryService
     {
         $authors = $this->authorQueryService->getByLastName($lastname);
         $books = [];
+        $uniqueBookIds = [];
+
         foreach ($authors as $author) {
             foreach ($author->getBooks() as $book) {
-                if ($normalized) {
-                    $books[] = $this->normalizer->normalize($book);
-                } else {
-                    $books[] = $book;
+                $bookId = $book->getId();
+
+                if (!in_array($bookId, $uniqueBookIds, true)) {
+                    $uniqueBookIds[] = $bookId;
+
+                    if ($normalized) {
+                        $books[] = $this->normalizer->normalize($book);
+                    } else {
+                        $books[] = $book;
+                    }
                 }
             }
         }
+
         return $books;
     }
 }

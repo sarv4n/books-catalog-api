@@ -16,7 +16,9 @@ class UpdateCommand implements UpdateCommandInterface
 
     private ?\DateTimeImmutable $publicationDate;
 
-    private ?array $authors;
+    private ?array $authorsToAdd;
+
+    private ?array $authorsToRemove;
 
     public function getId(): int
     {
@@ -68,13 +70,23 @@ class UpdateCommand implements UpdateCommandInterface
         $this->publicationDate = $publicationDate;
     }
 
-    public function getAuthors(): ?array
+    public function getAuthorsToAdd(): ?array
     {
-        return $this->authors;
+        return $this->authorsToAdd;
     }
 
-    public function setAuthors(?array $authors): void
+    public function setAuthorsToAdd(?array $authorsToAdd): void
     {
-        $this->authors = $authors;
+        $this->authorsToAdd = $authorsToAdd;
+    }
+
+    public function getAuthorsToRemove(): ?array
+    {
+        return $this->authorsToRemove;
+    }
+
+    public function setAuthorsToRemove(?array $authorsToRemove): void
+    {
+        $this->authorsToRemove = $authorsToRemove;
     }
 }

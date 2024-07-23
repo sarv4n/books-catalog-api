@@ -26,7 +26,11 @@ interface UpdateRequestInterface extends RequestInterface
 
     public function setPublicationDate(mixed $publicationDate): void;
 
-    public function getAuthors(): mixed;
+    public function getAuthorsToAdd(): mixed;
 
-    public function setAuthors(mixed $authors): void;
+    public function setAuthorsToAdd(mixed $authorsToAdd): void;
+
+    public function getAuthorsToRemove(): mixed;
+
+    public function setAuthorsToRemove(mixed $authorsToRemove): void;
 }
