@@ -3,11 +3,11 @@ Quality-Profiency Assessment
 
 Чтобы поднять проект запустите команды в следующем порядке:
 
-make build
+# make build
 
-composer install(отказываемся от автогенерации докер-контейнера БД для doctrine) 
+# composer install(отказываемся от автогенерации докер-контейнера БД для doctrine) 
 
-make up
+# make up
 
 Переходим в php-fpm 
-php bin/console doctrine-migration-migrate
+# php bin/console doctrine-migration-migrate
