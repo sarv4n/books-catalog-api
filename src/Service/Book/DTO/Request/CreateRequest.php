@@ -77,7 +77,6 @@ class CreateRequest implements CreateRequestInterface
         $this->imagePath = $imagePath;
     }
 
-
     public function getPublicationDate(): mixed
     {
         return $this->publicationDate;

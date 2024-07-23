@@ -15,18 +15,18 @@ class AuthorController extends RestController
 {
     #[Route('/list', name: 'authors_list', methods: ['GET'])]
     public function listAction(
-        QueryService         $queryService,
+        QueryService $queryService,
     ) {
         return $this->makeJsonResponse($queryService->getAll(true));
     }
 
     #[Route('/create', name: 'create_author', methods: ['POST'])]
     public function createAction(
-        Request              $request,
+        Request $request,
         CreateRequestFactory $createRequestFactory,
         CreateCommandFactory $commandFactory,
-        ValidatorService     $validator,
-        CommandService         $commandService,
+        ValidatorService $validator,
+        CommandService $commandService,
     ) {
         $dto = $createRequestFactory->create($request->toArray());
         $validator->validateWithThrowsException($dto);

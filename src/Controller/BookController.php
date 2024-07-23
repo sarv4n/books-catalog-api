@@ -18,18 +18,18 @@ class BookController extends RestController
 {
     #[Route('/list', name: 'books_list', methods: ['GET'])]
     public function listAction(
-        QueryService         $queryService,
+        QueryService $queryService,
     ) {
         return $this->makeJsonResponse($queryService->getAll(true));
     }
 
     #[Route('/create', name: 'create_book', methods: ['POST'])]
     public function createAction(
-        Request              $request,
+        Request $request,
         CreateRequestFactory $createRequestFactory,
         CreateCommandFactory $commandFactory,
-        ValidatorService     $validator,
-        CommandService       $commandService,
+        ValidatorService $validator,
+        CommandService $commandService,
     ) {
         $requestData = $request->request->all();
         $requestData['imageFile'] = $request->files->get('image');
@@ -43,11 +43,11 @@ class BookController extends RestController
 
     #[Route('/update', name: 'update_book', methods: ['POST'])]
     public function updateAction(
-        Request              $request,
+        Request $request,
         UpdateRequestFactory $updateRequestFactory,
         UpdateCommandFactory $commandFactory,
-        ValidatorService     $validator,
-        CommandService       $commandService,
+        ValidatorService $validator,
+        CommandService $commandService,
     ) {
         $requestData = $request->request->all();
         $requestData['imageFile'] = $request->files->get('image');
@@ -57,7 +57,7 @@ class BookController extends RestController
 
         try {
             $commandService->update($commandFactory->create($dto));
-        }catch (EntityNotFoundException $e){
+        } catch (EntityNotFoundException $e) {
             return $this->makeJsonResponse(['error' => $e->getMessage()]);
         }
 
@@ -67,7 +67,7 @@ class BookController extends RestController
     #[Route('/find/{id}', name: 'find_book', methods: ['GET'])]
     public function findByIdAction(
         int $id,
-        QueryService       $queryService,
+        QueryService $queryService,
     ) {
         return $this->makeJsonResponse($queryService->getItem($id, true));
     }
@@ -75,7 +75,7 @@ class BookController extends RestController
     #[Route('/find-by/lastname/{lastname}', name: 'find_by_lastname', methods: ['GET'])]
     public function findByLastNameAction(
         string $lastname,
-        QueryService       $queryService,
+        QueryService $queryService,
     ) {
         return $this->makeJsonResponse($queryService->getByAuthorLastname($lastname, true));
     }

@@ -12,8 +12,7 @@ class CommandService
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly BookQueryService $bookQueryService,
-    )
-    {
+    ) {
     }
 
     public function create(CreateCommandInterface $command): void

@@ -13,8 +13,7 @@ class QueryService extends BaseQueryService
         BookRepository $authorRepository,
         Normalizer $normalizer,
         private readonly AuthorQueryService $authorQueryService,
-    )
-    {
+    ) {
         parent::__construct($authorRepository, $normalizer);
     }
 
@@ -26,7 +25,7 @@ class QueryService extends BaseQueryService
             foreach ($author->getBooks() as $book) {
                 if ($normalized) {
                     $books[] = $this->normalizer->normalize($book);
-                }else {
+                } else {
                     $books[] = $book;
                 }
             }

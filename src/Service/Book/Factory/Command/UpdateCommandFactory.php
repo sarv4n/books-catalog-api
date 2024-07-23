@@ -25,8 +25,9 @@ class UpdateCommandFactory implements CommandFactoryInterface
             $command->setImageFile($request->getImageFile());
         }
 
-        $command->setPublicationDate($request->getPublicationDate() ?
-            new \DateTimeImmutable($request->getPublicationDate()) : null
+        $command->setPublicationDate(
+            $request->getPublicationDate() ?
+                new \DateTimeImmutable($request->getPublicationDate()) : null,
         );
 
         $command->setAuthors($request->getAuthors() ?? []);

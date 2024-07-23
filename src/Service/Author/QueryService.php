@@ -11,8 +11,7 @@ class QueryService extends BaseQueryService
     public function __construct(
         AuthorRepository $authorRepository,
         Normalizer $normalizer,
-    )
-    {
+    ) {
         parent::__construct($authorRepository, $normalizer);
     }
 

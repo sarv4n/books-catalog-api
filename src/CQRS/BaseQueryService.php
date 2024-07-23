@@ -13,8 +13,7 @@ class BaseQueryService
     public function __construct(
         ServiceEntityRepositoryInterface $entityRepository,
         protected readonly EntityNormalizerInterface $normalizer,
-    )
-    {
+    ) {
         $this->repository = $entityRepository;
     }
 
@@ -35,7 +34,7 @@ class BaseQueryService
         return $normalizedItems;
     }
 
-    public function getItem(int $id, bool $normalized = false): EntityInterface|array|null
+    public function getItem(int $id, bool $normalized = false): EntityInterface | array | null
     {
         if (!$normalized) {
             return $this->repository->findOneBy(['id' => $id]);

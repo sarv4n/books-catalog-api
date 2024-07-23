@@ -30,7 +30,7 @@ class RestController extends AbstractController
 
     public function makeJsonErrorResponse(
         string $message,
-               $status = Response::HTTP_BAD_REQUEST,
+        $status = Response::HTTP_BAD_REQUEST,
     ): JsonResponse {
         $responseData['status'] = 0;
         $responseData['error'] = $message;

@@ -16,8 +16,7 @@ class CommandService
         private readonly AuthorQueryService $authorQueryService,
         private readonly QueryService $queryService,
         private readonly BookImageService $imageService,
-    )
-    {
+    ) {
     }
 
     public function create(CreateCommandInterface $command): void
@@ -47,7 +46,7 @@ class CommandService
     {
         $book = $this->queryService->getItem($command->getId());
 
-        if($book === null) {
+        if ($book === null) {
             throw new EntityNotFoundException();
         }
 
@@ -64,7 +63,7 @@ class CommandService
 
         $this->entityManager->persist($book);
 
-        if($command->getImageFile() !== null) {
+        if ($command->getImageFile() !== null) {
             $imagePath = $this->imageService->saveFile($book, $command->getImageFile());
             $book->setImagePath($imagePath);
         }

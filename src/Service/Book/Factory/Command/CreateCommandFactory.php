@@ -17,8 +17,9 @@ class CreateCommandFactory implements CommandFactoryInterface
         $command->setDescription($request->getDescription());
         $command->setImageFile($request->getImageFile());
 
-        $command->setPublicationDate($request->getPublicationDate() ?
-            new \DateTimeImmutable($request->getPublicationDate()) : null
+        $command->setPublicationDate(
+            $request->getPublicationDate() ?
+                new \DateTimeImmutable($request->getPublicationDate()) : null,
         );
 
         $command->setAuthors($request->getAuthors() ?? []);

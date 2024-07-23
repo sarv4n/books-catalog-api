@@ -88,7 +88,6 @@ class UpdateRequest implements UpdateRequestInterface
         $this->imagePath = $imagePath;
     }
 
-
     public function getPublicationDate(): mixed
     {
         return $this->publicationDate;
