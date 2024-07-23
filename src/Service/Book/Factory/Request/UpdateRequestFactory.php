@@ -12,13 +12,11 @@ class UpdateRequestFactory implements RequestFactoryInterface
     {
         $dto = new UpdateRequest();
 
-        $dto->setId($args['id'] ?? null);
+        $dto->setId((int) $args['id'] ?? null);
         $dto->setTitle($args['title'] ?? null);
         $dto->setDescription($args['description'] ?? null);
-        $dto->setImagePath($args['imagePath'] ?? null);
-
+        $dto->setImageFile($args['imageFile'] ?? null);
         $dto->setPublicationDate($args['publicationDate'] ?? null);
-
         $dto->setAuthors($args['authors'] ?? null);
 
         return $dto;

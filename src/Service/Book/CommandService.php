@@ -7,6 +7,7 @@ use App\Service\Book\DTO\Command\CreateCommandInterface;
 use App\Service\Book\DTO\Command\UpdateCommandInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\Author\QueryService as AuthorQueryService;
+use Doctrine\ORM\EntityNotFoundException;
 
 class CommandService
 {
@@ -14,6 +15,7 @@ class CommandService
         private readonly EntityManagerInterface $entityManager,
         private readonly AuthorQueryService $authorQueryService,
         private readonly QueryService $queryService,
+        private readonly BookImageService $imageService,
     )
     {
     }
@@ -24,7 +26,6 @@ class CommandService
 
         $book->setTitle($command->getTitle());
         $book->setDescription($command->getDescription());
-        $book->setImagePath($command->getImagePath());
         $book->setPublicationDate($command->getPublicationDate());
 
         foreach ($command->getAuthors() as $authorId) {
@@ -32,16 +33,26 @@ class CommandService
         }
 
         $this->entityManager->persist($book);
+
+        $imagePath = $this->imageService->saveFile($book, $command->getImageFile());
+        $book->setImagePath($imagePath);
+
         $this->entityManager->flush();
     }
 
+    /*
+     * @throws EntityNotFoundException
+     */
     public function update(UpdateCommandInterface $command): void
     {
         $book = $this->queryService->getItem($command->getId());
 
+        if($book === null) {
+            throw new EntityNotFoundException();
+        }
+
         $book->setTitle($command->getTitle());
         $book->setDescription($command->getDescription());
-        $book->setImagePath($command->getImagePath());
 
         if ($command->getPublicationDate() !== null) {
             $book->setPublicationDate($command->getPublicationDate());
@@ -52,6 +63,12 @@ class CommandService
         }
 
         $this->entityManager->persist($book);
+
+        if($command->getImageFile() !== null) {
+            $imagePath = $this->imageService->saveFile($book, $command->getImageFile());
+            $book->setImagePath($imagePath);
+        }
+
         $this->entityManager->flush();
     }
 }

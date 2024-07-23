@@ -15,8 +15,8 @@ interface UpdateRequestInterface extends RequestInterface
     public function getDescription(): mixed;
     public function setDescription(mixed $description): void;
 
-    public function getImagePath(): mixed;
-    public function setImagePath(mixed $imagePath): void;
+    public function getImageFile(): mixed;
+    public function setImageFile(mixed $imageFile): void;
 
     public function getPublicationDate(): mixed;
     public function setPublicationDate(mixed $publicationDate): void;

@@ -3,11 +3,12 @@
 namespace App\Service\Book\DTO\Request;
 
 use App\Entity\Book;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\Entity as EntityAssert;
 use App\Entity\Author;
 
-#[EntityAssert\EntityUniqueFieldConstraint(entity: Book::class, fields: ['imagePath', 'title'], excludeSelf: true)]
+#[EntityAssert\EntityUniqueFieldConstraint(entity: Book::class, fields: ['title'], excludeSelf: true)]
 class UpdateRequest implements UpdateRequestInterface
 {
     #[Assert\NotBlank]
@@ -22,9 +23,13 @@ class UpdateRequest implements UpdateRequestInterface
     #[Assert\Length(max: 255)]
     private mixed $description = null;
 
-    #[Assert\Type('string')]
-    #[Assert\Length(max: 255)]
-    private mixed $imagePath = null;
+    #[Assert\Type(UploadedFile::class)]
+    #[Assert\File(
+        maxSize: '2M',
+        mimeTypes: ['image/jpeg', 'image/png'],
+        mimeTypesMessage: 'Please upload a valid image (JPEG or PNG).'
+    )]
+    private mixed $imageFile = null;
 
     #[Assert\DateTime]
     private mixed $publicationDate = null;
@@ -63,6 +68,16 @@ class UpdateRequest implements UpdateRequestInterface
         $this->description = $description;
     }
 
+    public function getImageFile(): mixed
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(mixed $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
     public function getImagePath(): mixed
     {
         return $this->imagePath;
@@ -72,6 +87,7 @@ class UpdateRequest implements UpdateRequestInterface
     {
         $this->imagePath = $imagePath;
     }
+
 
     public function getPublicationDate(): mixed
     {

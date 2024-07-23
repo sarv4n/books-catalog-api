@@ -3,11 +3,12 @@
 namespace App\Service\Book\DTO\Request;
 
 use App\Entity\Book;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\Entity as EntityAssert;
 use App\Entity\Author;
 
-#[EntityAssert\EntityUniqueFieldConstraint(entity: Book::class, fields: ['imagePath', 'title'])]
+#[EntityAssert\EntityUniqueFieldConstraint(entity: Book::class, fields: ['title'])]
 class CreateRequest implements CreateRequestInterface
 {
     #[Assert\NotBlank]
@@ -19,9 +20,14 @@ class CreateRequest implements CreateRequestInterface
     #[Assert\Length(max: 255)]
     private mixed $description = null;
 
-    #[Assert\Type('string')]
-    #[Assert\Length(max: 255)]
-    private mixed $imagePath = null;
+    #[Assert\NotBlank]
+    #[Assert\Type(UploadedFile::class)]
+    #[Assert\File(
+        maxSize: '2M',
+        mimeTypes: ['image/jpeg', 'image/png'],
+        mimeTypesMessage: 'Please upload a valid image (JPEG or PNG).'
+    )]
+    private mixed $imageFile = null;
 
     #[Assert\NotBlank]
     #[Assert\DateTime]
@@ -51,6 +57,16 @@ class CreateRequest implements CreateRequestInterface
         $this->description = $description;
     }
 
+    public function getImageFile(): mixed
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(mixed $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
     public function getImagePath(): mixed
     {
         return $this->imagePath;
@@ -60,6 +76,7 @@ class CreateRequest implements CreateRequestInterface
     {
         $this->imagePath = $imagePath;
     }
+
 
     public function getPublicationDate(): mixed
     {

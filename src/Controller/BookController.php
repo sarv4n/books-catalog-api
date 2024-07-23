@@ -9,6 +9,7 @@ use App\Service\Book\Factory\Request\CreateRequestFactory;
 use App\Service\Book\Factory\Request\UpdateRequestFactory;
 use App\Service\Book\QueryService;
 use App\Service\Common\Validator\ValidatorService;
+use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -30,7 +31,10 @@ class BookController extends RestController
         ValidatorService     $validator,
         CommandService       $commandService,
     ) {
-        $dto = $createRequestFactory->create($request->toArray());
+        $requestData = $request->request->all();
+        $requestData['imageFile'] = $request->files->get('image');
+
+        $dto = $createRequestFactory->create($requestData);
         $validator->validateWithThrowsException($dto);
 
         $commandService->create($commandFactory->create($dto));
@@ -45,15 +49,22 @@ class BookController extends RestController
         ValidatorService     $validator,
         CommandService       $commandService,
     ) {
-        $dto = $updateRequestFactory->create($request->toArray());
+        $requestData = $request->request->all();
+        $requestData['imageFile'] = $request->files->get('image');
+
+        $dto = $updateRequestFactory->create($requestData);
         $validator->validateWithThrowsException($dto);
 
-        $commandService->update($commandFactory->create($dto));
+        try {
+            $commandService->update($commandFactory->create($dto));
+        }catch (EntityNotFoundException $e){
+            return $this->makeJsonResponse(['error' => $e->getMessage()]);
+        }
 
         return $this->makeJsonResponse(['ok']);
     }
 
-    #[Route('/find-by/id/{id}', name: 'find_book', methods: ['GET'])]
+    #[Route('/find/{id}', name: 'find_book', methods: ['GET'])]
     public function findByIdAction(
         int $id,
         QueryService       $queryService,

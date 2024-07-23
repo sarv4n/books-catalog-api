@@ -2,13 +2,15 @@
 
 namespace App\Service\Book\DTO\Command;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class CreateCommand implements CreateCommandInterface
 {
     private string $title;
 
     private ?string $description;
 
-    private ?string $imagePath;
+    private UploadedFile $imageFile;
 
     private \DateTimeImmutable $publicationDate;
 
@@ -34,14 +36,14 @@ class CreateCommand implements CreateCommandInterface
         $this->description = $description;
     }
 
-    public function getImagePath(): ?string
+    public function getImageFile(): UploadedFile
     {
-        return $this->imagePath;
+        return $this->imageFile;
     }
 
-    public function setImagePath(?string $imagePath): void
+    public function setImageFile(UploadedFile $imageFile): void
     {
-        $this->imagePath = $imagePath;
+        $this->imageFile = $imageFile;
     }
 
     public function getPublicationDate(): \DateTimeImmutable

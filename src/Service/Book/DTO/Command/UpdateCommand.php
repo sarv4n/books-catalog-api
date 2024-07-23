@@ -2,15 +2,17 @@
 
 namespace App\Service\Book\DTO\Command;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class UpdateCommand implements UpdateCommandInterface
 {
     private int $id;
 
-    private string $title;
+    private ?string $title;
 
     private ?string $description;
 
-    private ?string $imagePath;
+    private ?UploadedFile $imageFile;
 
     private ?\DateTimeImmutable $publicationDate;
 
@@ -26,12 +28,12 @@ class UpdateCommand implements UpdateCommandInterface
         $this->id = $id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): void
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -46,14 +48,14 @@ class UpdateCommand implements UpdateCommandInterface
         $this->description = $description;
     }
 
-    public function getImagePath(): ?string
+    public function getImageFile(): ?UploadedFile
     {
-        return $this->imagePath;
+        return $this->imageFile;
     }
 
-    public function setImagePath(?string $imagePath): void
+    public function setImageFile(?UploadedFile $imageFile): void
     {
-        $this->imagePath = $imagePath;
+        $this->imageFile = $imageFile;
     }
 
     public function getPublicationDate(): ?\DateTimeImmutable

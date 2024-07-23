@@ -15,9 +15,15 @@ class UpdateCommandFactory implements CommandFactoryInterface
 
         $command->setId($request->getId());
 
-        $command->setTitle($request->getTitle());
+        if ($request->getTitle() !== null) {
+            $command->setTitle($request->getTitle());
+        }
+
         $command->setDescription($request->getDescription());
-        $command->setImagePath($request->getImagePath());
+
+        if ($request->getImageFile() !== null) {
+            $command->setImageFile($request->getImageFile());
+        }
 
         $command->setPublicationDate($request->getPublicationDate() ?
             new \DateTimeImmutable($request->getPublicationDate()) : null
