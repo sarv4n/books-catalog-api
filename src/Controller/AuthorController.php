@@ -13,28 +13,25 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/author')]
 class AuthorController extends RestController
 {
+    #[Route('/list', name: 'authors_list', methods: ['GET'])]
+    public function listAction(
+        QueryService         $queryService,
+    ) {
+        return $this->makeJsonResponse($queryService->getAll(true));
+    }
+
     #[Route('/create', name: 'create_author', methods: ['POST'])]
     public function createAction(
         Request              $request,
-        CreateRequestFactory $createAuthorRequestFactory,
+        CreateRequestFactory $createRequestFactory,
         CreateCommandFactory $commandFactory,
         ValidatorService     $validator,
         CommandService         $commandService,
     ) {
-        $dto = $createAuthorRequestFactory->create($request->toArray());
+        $dto = $createRequestFactory->create($request->toArray());
         $validator->validateWithThrowsException($dto);
 
-        $result = $commandService->create($commandFactory->create($dto));
-        dd('Перемога!');
-    }
-
-    #[Route('/list', name: 'authors_list', methods: ['GET'])]
-    public function listAction(
-        Request              $request,
-        QueryService         $queryService,
-    ) {
-
-        dump($queryService->getAll());
-        dd('Перемога!');
+        $commandService->create($commandFactory->create($dto));
+        return $this->makeJsonResponse(['ok']);
     }
 }
