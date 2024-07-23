@@ -11,3 +11,6 @@ Quality-Profiency Assessment
 
 Переходим в php-fpm 
  php bin/console doctrine-migration-migrate
+
+
+Для тела запроса при POST запросах используйте form-data формат.
