@@ -5,9 +5,8 @@ namespace App\Normalizer\Entity;
 use App\Normalizer\Entity\Strategy\NormalizeEntityStrategy;
 use App\Normalizer\Entity\Strategy\NormalizeNestedEntityStrategy;
 use App\Service\Normalizer\Entity\EntityNormalizerService;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class Normalizer implements NormalizerInterface
+class Normalizer implements EntityNormalizerInterface
 {
     public function __construct(
         private readonly NormalizeEntityStrategy $normalizeEntityStrategy,

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
-class Author
+class Author implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
